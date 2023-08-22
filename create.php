@@ -1,4 +1,13 @@
 <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "myshop";
+
+//Create connection
+$connection = new mysqli($servername, $username, $password, $database);
+
 $name = "";
 $email = "";
 $phone = "";
@@ -20,12 +29,24 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
         }
 
         //add new client to database
+        $sql = "INSERT INTO clients (name, email, phone, address)" . "VALUES('$name', '$email', '$phone', '$address')";
+
+        $result = $connection->query($sql);
+
+        if(!$result){
+            $errorMessage = "Invalid query: " . $connection->error;
+            break;
+        }
         $name = "";
         $email = "";
         $phone = "";
         $address = "";
 
         $successMessage = "Client added correctly";
+        
+        header("location: /myshop/index.php");
+
+        exit;
     } while (false);
 }
 ?>
@@ -46,7 +67,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
         if(!empty($errorMessage)){
             echo "
                 <div class ='alert alert-warning alert-dismissible fade show' role='alert'>
-                    <strong><$errorMessage/strong>
+                    <strong>$errorMessage</strong>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                 </div>
             ";
@@ -76,6 +97,9 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="address" value="">
                 </div>
+            </div>
+
+                <br>
 
                 <?php
                     if(!empty($successMessage)){
@@ -83,7 +107,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
                         <div class = 'row mb-3'>
                             <div class = 'offet-sm-3 col-sm-6'>
                                 <div class ='alert alert-success alert-dismissible fade show' role='alert'>
-                                <strong><$sucessMessage/strong>
+                                <strong>$successMessage</strong>
                                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                 </div>
                             </div>
@@ -91,15 +115,16 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
                         ";
                     }
                 ?>
-                <div class="row mb-3">
-                    <div class="offset-sm-3 col-sm-3 d-grid">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div class="col-sm-3 d-grid">
-                        <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
-                    </div>
+
+                <br>
+                
+            <div class="row mb-3">
+                <div class="offset-sm-3 col-sm-3 d-grid">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            </div>
+                <div class="col-sm-3 d-grid">
+                    <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+                </div>
             </div>
         </form>
     </div>
