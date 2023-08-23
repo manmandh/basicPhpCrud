@@ -18,7 +18,7 @@ $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    //GET method: Show the data of the clinet
+    //GET method: Show the data of the client
     if(!isset($_GET["id"])){
         header("location: /myshop/index.php");
         exit;
@@ -37,13 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
     $name = $row["name"];
-    $name = $row["email"];
-    $name = $row["phone"];
-    $name = $row["address"];
+    $email = $row["email"];
+    $phone = $row["phone"];
+    $address = $row["address"];
 
 }else{
     //POST method: Update the date of the client
-    $id = $_POST["id"];
+    $id = $_GET["id"];
     $name = $_POST["name"];
     $email = $_POST["email"];
     $phone = $_POST["phone"];
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             ";
         }
         ?>
-        <form method="post"name="id" action="">
+        <form method="post" name="id" action="">
             <input type="hidden" value="<?php echo $id;?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="">Name</label>
