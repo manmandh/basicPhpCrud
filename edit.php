@@ -59,11 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $result = $connection->query($sql);
 
+        
         if(!$result){
             $errorMessage = "Invalid query: " . $connection->error;
             break;
         }
 
+        
         $successMessage = "Client added correctly";
 
     } while (true);
